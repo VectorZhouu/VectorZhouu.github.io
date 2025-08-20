@@ -4,35 +4,75 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VectorZhouu — 个人主页</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
-      transition: background-color 0.3s, color 0.3s;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
     header {
       position: fixed;
       top: 0;
-      left: 0;
       width: 100%;
-      background: #222;
-      color: white;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.08);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
+      padding: 15px 40px;
       z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
     }
     header h1 {
-      margin: 0;
-      font-size: 1.5em;
+      font-weight: 600;
     }
-    nav a {
+    nav a, .btn {
+      margin-left: 20px;
       color: white;
-      margin-left: 15px;
       text-decoration: none;
+      font-weight: 400;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      color: #ffeb3b;
+    }
+    .btn {
+      padding: 10px 20px;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      border: none;
+      cursor: pointer;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(15px);
+      transition: all 0.3s ease;
+    }
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.4) 10%, transparent 10.01%);
+      background-size: 20% 20%;
+      animation: liquid 6s linear infinite;
+      opacity: 0.6;
+    }
+    @keyframes liquid {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-20%, -20%); }
+    }
+    .btn:hover {
+      transform: scale(1.05);
     }
     .hero {
       height: 100vh;
@@ -41,46 +81,59 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-      color: white;
       padding: 20px;
     }
+    .hero h2 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 1.2em;
+      opacity: 0.9;
+    }
     section {
-      padding: 80px 20px;
-      max-width: 900px;
+      padding: 100px 20px;
+      max-width: 1100px;
       margin: auto;
     }
     .projects {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
     }
     .project-card {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      padding: 25px;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.2);
+      animation: fadeInUp 0.8s ease;
     }
     .project-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
-    .theme-toggle, .github-btn {
-      cursor: pointer;
-      padding: 8px 12px;
-      border: none;
-      border-radius: 6px;
-      margin-left: 10px;
+    @keyframes fadeInUp {
+      from {opacity:0; transform: translateY(20px);} to {opacity:1; transform:translateY(0);}
     }
-    .github-btn {
-      background: #333;
-      color: white;
+    .loader {
+      border: 4px solid rgba(255,255,255,0.2);
+      border-top: 4px solid #fff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 40px auto;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
     footer {
       text-align: center;
-      padding: 20px;
-      background: #222;
-      color: white;
+      padding: 30px;
+      background: rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(255,255,255,0.2);
     }
   </style>
 </head>
@@ -92,8 +145,7 @@
       <a href="#skills">技能</a>
       <a href="#projects">项目</a>
       <a href="#contact">联系</a>
-      <button class="github-btn" onclick="window.open('https://github.com/VectorZhouu','_blank')">GitHub</button>
-      <button class="theme-toggle">切换主题</button>
+      <button class="btn" onclick="window.open('https://github.com/VectorZhouu','_blank')">GitHub</button>
     </nav>
   </header>
 
@@ -118,14 +170,13 @@
 
   <section id="projects">
     <h2>我的 GitHub 项目</h2>
-    <div class="projects" id="project-list">
-      <p>正在加载仓库...</p>
-    </div>
+    <div id="loader" class="loader"></div>
+    <div class="projects" id="project-list"></div>
   </section>
 
   <section id="contact">
     <h2>联系我</h2>
-    <p>Email: <a href="mailto:yourmail@example.com">yourmail@example.com</a></p>
+    <p>Email: <a href="mailto:yourmail@example.com" style="color:#ffeb3b">yourmail@example.com</a></p>
   </section>
 
   <footer>
@@ -133,29 +184,16 @@
   </footer>
 
   <script>
-    // 主题切换
-    const toggleBtn = document.querySelector('.theme-toggle');
-    toggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      if(document.body.classList.contains('dark')){
-        document.body.style.backgroundColor = '#121212';
-        document.body.style.color = 'white';
-      }else{
-        document.body.style.backgroundColor = '#f4f4f4';
-        document.body.style.color = '#333';
-      }
-    });
-
-    // GitHub API 获取仓库
     async function loadRepos(){
       const res = await fetch('https://api.github.com/users/VectorZhouu/repos');
       const repos = await res.json();
       const list = document.getElementById('project-list');
-      list.innerHTML = '';
+      const loader = document.getElementById('loader');
+      loader.style.display = 'none';
       repos.forEach(repo => {
         const card = document.createElement('div');
         card.className = 'project-card';
-        card.innerHTML = `<h3>${repo.name}</h3><p>${repo.description || '暂无描述'}</p><a href="${repo.html_url}" target="_blank">查看仓库</a>`;
+        card.innerHTML = `<h3>${repo.name}</h3><p>${repo.description || '暂无描述'}</p><a href="${repo.html_url}" target="_blank" style="color:#ffeb3b">查看仓库</a>`;
         list.appendChild(card);
       });
     }
