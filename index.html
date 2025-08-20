@@ -1,311 +1,46 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VectorZhouu · 个人主页</title>
-  <meta name="description" content="VectorZhouu 的个人主页：关于我、技能、项目与联系。" />
-  <meta name="color-scheme" content="light dark">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    /* ===== 基础配色与暗色模式 ===== */
-    :root {
-      --bg: #0b1020;
-      --panel: #0f162e;
-      --muted: #94a3b8;
-      --text: #e6eaf2;
-      --brand: #7c3aed; /* 紫色主色 */
-      --brand-2: #06b6d4; /* 青色点缀 */
-      --ring: rgba(124, 58, 237, .45);
-      --card: rgba(255,255,255,.04);
-      --border: rgba(148,163,184,.25);
-      --shadow: 0 10px 25px rgba(2,6,23,.35);
-      --radius: 16px;
-    }
-    @media (prefers-color-scheme: light) {
-      :root { 
-        --bg: #f6f7fb; 
-        --panel: #ffffff; 
-        --text: #0b1020; 
-        --muted: #5b6782; 
-        --card: rgba(15,22,46,.04);
-        --border: rgba(15,22,46,.08);
-        --shadow: 0 10px 25px rgba(2, 6, 23, .08);
-      }
-    }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-      color: var(--text);
-      background: radial-gradient(1000px 600px at 10% -10%, rgba(124,58,237,.25), transparent 50%),
-                  radial-gradient(1000px 600px at 90% 110%, rgba(6,182,212,.2), transparent 50%),
-                  var(--bg);
-      line-height: 1.6;
-      letter-spacing: 0.2px;
-    }
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-    
-    /* ===== 顶部导航 ===== */
-    .nav {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(12px);
-      background: color-mix(in oklab, var(--panel) 70%, transparent);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner { max-width: 1100px; margin: 0 auto; display:flex; align-items:center; justify-content:space-between; padding: 14px 20px; }
-    .brand { display:flex; align-items:center; gap: 12px; font-weight: 800; letter-spacing: 0.5px; }
-    .logo {
-      width: 36px; height: 36px; border-radius: 12px;
-      background: conic-gradient(from 210deg, var(--brand), var(--brand-2), var(--brand));
-      box-shadow: inset 0 0 25px rgba(255,255,255,.15), var(--shadow);
-    }
-    .nav a { opacity:.85; }
-    .nav a:hover { opacity:1; }
-    .menu { display:flex; gap: 16px; align-items:center; }
-    .menu a { padding: 8px 12px; border-radius: 10px; }
-    .menu a.active, .menu a:hover { background: var(--card); }
-    .toggle {
-      border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; cursor: pointer; background: var(--panel);
-      transition: transform .2s ease; font-weight: 600;
-    }
-    .toggle:active { transform: scale(.98); }
-
-    /* ===== 容器与排版 ===== */
-    .container { max-width: 1100px; margin: 0 auto; padding: 44px 20px; }
-    h1 { font-size: clamp(32px, 5vw, 56px); line-height: 1.1; margin: 0 0 14px; }
-    h2 { font-size: clamp(22px, 3vw, 32px); margin: 0 0 10px; }
-    p.lead { font-size: clamp(16px, 2.2vw, 18px); color: var(--muted); margin: 0; }
-
-    /* ===== Hero 区 ===== */
-    .hero { display:grid; grid-template-columns: 1.4fr 1fr; gap: 28px; align-items:center; }
-    .hero .pane { background: var(--panel); border: 1px solid var(--border); border-radius: calc(var(--radius) + 4px); padding: 26px; box-shadow: var(--shadow); }
-    .hero .intro { position: relative; overflow: hidden; }
-    .hero .intro::after {
-      content:""; position:absolute; inset:-1px; border-radius: inherit; pointer-events:none;
-      background: linear-gradient(120deg, rgba(124,58,237,.28), rgba(6,182,212,.28));
-      mix-blend-mode: overlay; opacity:.4;
-    }
-    .chip { display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:999px; border:1px dashed var(--border); color: var(--muted); font-size: 12px; }
-    .buttons { display:flex; gap:12px; margin-top: 18px; flex-wrap: wrap; }
-    .btn { padding: 10px 14px; border-radius: 12px; border:1px solid var(--border); background: var(--card); font-weight: 600; display:inline-flex; align-items:center; gap:10px; }
-    .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: white; border-color: transparent; box-shadow: 0 10px 20px rgba(124,58,237,.35); }
-
-    /* ===== Cards & Grid ===== */
-    .grid { display:grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
-    .card { grid-column: span 4; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
-    .card h3 { margin: 4px 0 6px; font-size: 18px; }
-    .card p { margin: 0; color: var(--muted); font-size: 14px; }
-
-    .card.large { grid-column: span 8; }
-    .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-
-    /* ===== Section 标题 ===== */
-    .section { margin-top: 48px; }
-    .section-head { display:flex; align-items:end; justify-content:space-between; margin-bottom: 12px; }
-    .section-head .title { display:flex; align-items:center; gap: 10px; }
-    .dot { width:10px; height:10px; border-radius:999px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: 0 0 20px var(--ring); }
-    .muted { color: var(--muted); font-size: 14px; }
-
-    /* ===== 页脚 ===== */
-    footer { margin: 60px 0 20px; text-align:center; color: var(--muted); font-size: 13px; }
-
-    /* ===== 响应式 ===== */
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; }
-      .card, .card.large { grid-column: span 12; }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VectorZhouu · 个人主页</title>
+<meta name="description" content="VectorZhouu 的个人主页：关于我、技能、项目与联系。" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1020;--panel:#0f162e;--muted:#94a3b8;--text:#e6eaf2;--brand:#7c3aed;--brand-2:#06b6d4;--ring:rgba(124,58,237,.45);--card:rgba(255,255,255,.04);--border:rgba(148,163,184,.25);--shadow:0 10px 25px rgba(2,6,23,.35);--radius:16px}
+@media(prefers-color-scheme:light){:root{--bg:#f6f7fb;--panel:#fff;--text:#0b1020;--muted:#5b6782;--card:rgba(15,22,46,.04);--border:rgba(15,22,46,.08);--shadow:0 10px 25px rgba(2,6,23,.08)}}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";color:var(--text);background:radial-gradient(1000px 600px at 10% -10%,rgba(124,58,237,.25),transparent 50%),radial-gradient(1000px 600px at 90% 110%,rgba(6,182,212,.2),transparent 50%),var(--bg);line-height:1.6;letter-spacing:.2px}a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:color-mix(in oklab,var(--panel) 70%,transparent);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.5px}.logo{width:36px;height:36px;border-radius:12px;background:conic-gradient(from 210deg,var(--brand),var(--brand-2),var(--brand));box-shadow:inset 0 0 25px rgba(255,255,255,.15),var(--shadow)}
+.nav a{opacity:.85}.nav a:hover{opacity:1}.menu{display:flex;gap:16px;align-items:center}.menu a{padding:8px 12px;border-radius:10px}.menu a.active,.menu a:hover{background:var(--card)}
+.toggle{border:1px solid var(--border);border-radius:12px;padding:8px 12px;cursor:pointer;background:var(--panel);transition:transform .2s ease;font-weight:600}.toggle:active{transform:scale(.98)}
+.container{max-width:1100px;margin:0 auto;padding:44px 20px}h1{font-size:clamp(32px,5vw,56px);line-height:1.1;margin:0 0 14px}h2{font-size:clamp(22px,3vw,32px);margin:0 0 10px}p.lead{font-size:clamp(16px,2.2vw,18px);color:var(--muted);margin:0}
+.hero{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:center}.hero .pane{background:var(--panel);border:1px solid var(--border);border-radius:calc(var(--radius)+4px);padding:26px;box-shadow:var(--shadow)}.hero .intro{position:relative;overflow:hidden}.hero .intro::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;background:linear-gradient(120deg,rgba(124,58,237,.28),rgba(6,182,212,.28));mix-blend-mode:overlay;opacity:.4}
+.chip{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;border:1px dashed var(--border);color:var(--muted);font-size:12px}
+.buttons{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}.btn{padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--card);font-weight:600;display:inline-flex;align-items:center;gap:10px}.btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-color:transparent;box-shadow:0 10px 20px rgba(124,58,237,.35)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}.card{grid-column:span 4;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}.card h3{margin:4px 0 6px;font-size:18px}.card p{margin:0;color:var(--muted);font-size:14px}
+.card.large{grid-column:span 8}.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+.section{margin-top:48px}.section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:12px}.section-head .title{display:flex;align-items:center;gap:10px}.dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 0 20px var(--ring)}.muted{color:var(--muted);font-size:14px}
+footer{margin:60px 0 20px;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.card,.card.large{grid-column:span 12}}
+</style>
 </head>
 <body>
-  <!-- 顶部导航 -->
-  <header class="nav">
-    <div class="nav-inner">
-      <a href="#home" class="brand">
-        <span class="logo" aria-hidden="true"></span>
-        <span>VectorZhouu</span>
-      </a>
-      <nav class="menu" aria-label="主菜单">
-        <a href="#about" class="active">关于</a>
-        <a href="#skills">技能</a>
-        <a href="#projects">项目</a>
-        <a href="#contact">联系</a>
-        <button id="themeToggle" class="toggle" type="button" aria-label="切换主题">🌗 主题</button>
-      </nav>
-    </div>
-  </header>
-
-  <main id="home" class="container">
-    <!-- Hero -->
-    <section class="hero" aria-label="简介">
-      <div class="pane intro">
-        <div class="chip">👋 你好，我是</div>
-        <h1>VectorZhouu</h1>
-        <p class="lead">高中生 | 计算机科学爱好者 | Python 开发入门。热爱把脑洞变成作品，对算法、前端与可视化很感兴趣。</p>
-        <div class="buttons">
-          <a class="btn primary" href="#projects">🚀 查看项目</a>
-          <a class="btn" href="#contact">📫 快速联系</a>
-        </div>
-      </div>
-      <div class="pane" aria-hidden="true">
-        <svg viewBox="0 0 600 400" width="100%" height="100%" role="img" aria-label="装饰图形">
-          <defs>
-            <linearGradient id="g1" x1="0" x2="1">
-              <stop offset="0%" stop-color="var(--brand)"/>
-              <stop offset="100%" stop-color="var(--brand-2)"/>
-            </linearGradient>
-            <filter id="blur">
-              <feGaussianBlur stdDeviation="20"/>
-            </filter>
-          </defs>
-          <circle cx="140" cy="120" r="90" fill="url(#g1)" filter="url(#blur)" opacity="0.7"/>
-          <rect x="280" y="60" width="220" height="220" rx="32" fill="url(#g1)" opacity="0.35"/>
-          <g fill="none" stroke="url(#g1)" opacity="0.5">
-            <path d="M0,340 Q300,240 600,340"/>
-            <path d="M0,360 Q300,260 600,360"/>
-          </g>
-          <g>
-            <text x="300" y="200" text-anchor="middle" font-size="24" fill="var(--text)" opacity="0.85">Keep Coding, Keep Curious.</text>
-          </g>
-        </svg>
-      </div>
-    </section>
-
-    <!-- 关于我 -->
-    <section id="about" class="section">
-      <div class="section-head">
-        <div class="title"><span class="dot"></span><h2>关于我</h2></div>
-        <span class="muted">持续更新中</span>
-      </div>
-      <div class="grid">
-        <article class="card large">
-          <h3>你好，我是 VectorZhouu 👨‍💻</h3>
-          <p>目前就读高中，喜欢 <strong>Computer Science</strong> 与 <strong>Python</strong>。我正在学习算法与前端基础，想做一些有趣的小工具与可视化 demo。目标是把想法快速落地，并在过程中写出更优雅的代码。</p>
-        </article>
-        <article class="card">
-          <h3>最近在学</h3>
-          <p>模运算/同余、数据结构入门、HTML/CSS/JS、Git 与 GitHub 基础。</p>
-        </article>
-        <article class="card">
-          <h3>感兴趣</h3>
-          <p>可视化、动画交互、算法竞赛入门、Manim、简单爬虫与自动化。</p>
-        </article>
-        <article class="card">
-          <h3>正在寻找</h3>
-          <p>合适的练手项目与开源入门 issue，如果你有建议，欢迎联系我！</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- 技能 -->
-    <section id="skills" class="section">
-      <div class="section-head">
-        <div class="title"><span class="dot"></span><h2>技能栈</h2></div>
-        <span class="muted">在学 + 实践</span>
-      </div>
-      <div class="grid">
-        <article class="card">
-          <h3>语言</h3>
-          <p class="mono">Python · JavaScript · HTML · CSS</p>
-        </article>
-        <article class="card">
-          <h3>工具</h3>
-          <p class="mono">Git · GitHub · VS Code · Terminal</p>
-        </article>
-        <article class="card">
-          <h3>方向</h3>
-          <p class="mono">算法基础 · Web 前端 · 可视化动效</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- 项目 -->
-    <section id="projects" class="section">
-      <div class="section-head">
-        <div class="title"><span class="dot"></span><h2>项目与作品</h2></div>
-        <span class="muted">示例卡片，可自行替换为真实项目</span>
-      </div>
-      <div class="grid">
-        <article class="card">
-          <h3>🎛️ 同余计算器</h3>
-          <p>一个简洁的同余/模运算小工具，支持快速求余与简单同余方程求解。</p>
-        </article>
-        <article class="card">
-          <h3>📈 排序可视化</h3>
-          <p>用原生 JS 实现冒泡、快速等排序动画，帮助理解算法过程。</p>
-        </article>
-        <article class="card">
-          <h3>🧩 Manim 小动画</h3>
-          <p>用 Manim 绘制数学小动画，如数论小例题、几何直观演示。</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- 联系方式 -->
-    <section id="contact" class="section">
-      <div class="section-head">
-        <div class="title"><span class="dot"></span><h2>联系我</h2></div>
-        <span class="muted">欢迎合作 / 交流 / 指教</span>
-      </div>
-      <div class="buttons">
-        <a class="btn primary" href="mailto:yourname@example.com">📧 发送邮件</a>
-        <a class="btn" href="https://github.com/vectorzhouu" target="_blank" rel="noreferrer">🌟 GitHub</a>
-        <a class="btn" href="#" onclick="copyLink(event)">🔗 复制本站链接</a>
-      </div>
-    </section>
-
-    <footer>
-      © <span id="year"></span> VectorZhouu · Build with ❤️ & curiosity
-    </footer>
-  </main>
-
-  <script>
-    // 年份
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // 平滑滚动与活动菜单
-    const links = document.querySelectorAll('.menu a[href^="#"]');
-    links.forEach(a => {
-      a.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelectorAll('.menu a').forEach(x=>x.classList.remove('active'));
-        a.classList.add('active');
-        document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-
-    // 主题切换（持久化）
-    const btn = document.getElementById('themeToggle');
-    const THEME_KEY = 'pref-theme';
-    const applyTheme = (mode) => {
-      if (mode === 'light') {
-        document.documentElement.style.colorScheme = 'light';
-        document.body.dataset.theme = 'light';
-      } else {
-        document.documentElement.style.colorScheme = 'dark';
-        document.body.dataset.theme = 'dark';
-      }
-    };
-    const saved = localStorage.getItem(THEME_KEY);
-    if (saved) applyTheme(saved);
-    btn.addEventListener('click', () => {
-      const current = document.body.dataset.theme === 'light' ? 'dark' : 'light';
-      localStorage.setItem(THEME_KEY, current);
-      applyTheme(current);
-    });
-
-    // 复制链接
-    function copyLink(e){
-      e.preventDefault();
-      navigator.clipboard.writeText(location.href).then(()=>{
-        const t = e.currentTarget; const old = t.textContent; t.textContent = '✅ 已复制';
-        setTimeout(()=> t.textContent = old, 1200);
-      });
-    }
-  </script>
+<header class="nav"><div class="nav-inner"><a href="#home" class="brand"><span class="logo"></span><span>VectorZhouu</span></a><nav class="menu"><a href="#about" class="active">关于</a><a href="#skills">技能</a><a href="#projects">项目</a><a href="#contact">联系</a><button id="themeToggle" class="toggle">🌗 主题</button></nav></div></header>
+<main id="home" class="container">
+<section class="hero"><div class="pane intro"><div class="chip">👋 你好，我是</div><h1>VectorZhouu</h1><p class="lead">高中生 | 计算机科学爱好者 | Python 开发入门。热爱把脑洞变成作品，对算法、前端与可视化很感兴趣。</p><div class="buttons"><a class="btn primary" href="#projects">🚀 查看项目</a><a class="btn" href="#contact">📫 快速联系</a></div></div><div class="pane" aria-hidden="true"><svg viewBox="0 0 600 400" width="100%" height="100%"><defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0%" stop-color="var(--brand)"/><stop offset="100%" stop-color="var(--brand-2)"/></linearGradient><filter id="blur"><feGaussianBlur stdDeviation="20"/></filter></defs><circle cx="140" cy="120" r="90" fill="url(#g1)" filter="url(#blur)" opacity="0.7"/><rect x="280" y="60" width="220" height="220" rx="32" fill="url(#g1)" opacity="0.35"/><g fill="none" stroke="url(#g1)" opacity="0.5"><path d="M0,340 Q300,240 600,340"/><path d="M0,360 Q300,260 600,360"/></g><text x="300" y="200" text-anchor="middle" font-size="24" fill="var(--text)" opacity="0.85">Keep Coding, Keep Curious.</text></svg></div></section>
+<section id="about" class="section"><div class="section-head"><div class="title"><span class="dot"></span><h2>关于我</h2></div><span class="muted">持续更新中</span></div><div class="grid"><article class="card large"><h3>你好，我是 VectorZhouu 👨‍💻</h3><p>目前就读高中，喜欢 <strong>Computer Science</strong> 与 <strong>Python</strong>。我正在学习算法与前端基础，想做一些有趣的小工具与可视化 demo。目标是把想法快速落地，并在过程中写出更优雅的代码。</p></article><article class="card"><h3>最近在学</h3><p>模运算/同余、数据结构入门、HTML/CSS/JS、Git 与 GitHub 基础。</p></article><article class="card"><h3>感兴趣</h3><p>可视化、动画交互、算法竞赛入门、Manim、简单爬虫与自动化。</p></article><article class="card"><h3>正在寻找</h3><p>合适的练手项目与开源入门 issue，如果你有建议，欢迎联系我！</p></article></div></section>
+<section id="skills" class="section"><div class="section-head"><div class="title"><span class="dot"></span><h2>技能栈</h2></div><span class="muted">在学 + 实践</span></div><div class="grid"><article class="card"><h3>语言</h3><p class="mono">Python · JavaScript · HTML · CSS</p></article><article class="card"><h3>工具</h3><p class="mono">Git · GitHub · VS Code · Terminal</p></article><article class="card"><h3>方向</h3><p class="mono">算法基础 · Web 前端 · 可视化动效</p></article></div></section>
+<section id="projects" class="section"><div class="section-head"><div class="title"><span class="dot"></span><h2>项目与作品</h2></div><span class="muted">示例卡片，可自行替换为真实项目</span></div><div class="grid"><article class="card"><h3>🎛️ 同余计算器</h3><p>一个简洁的同余/模运算小工具，支持快速求余与简单同余方程求解。</p></article><article class="card"><h3>📈 排序可视化</h3><p>用原生 JS 实现冒泡、快速等排序动画，帮助理解算法过程。</p></article><article class="card"><h3>🧩 Manim 小动画</h3><p>用 Manim 绘制数学小动画，如数论小例题、几何直观演示。</p></article></div></section>
+<section id="contact" class="section"><div class="section-head"><div class="title"><span class="dot"></span><h2>联系我</h2></div><span class="muted">欢迎合作 / 交流 / 指教</span></div><div class="buttons"><a class="btn primary" href="mailto:yourname@example.com">📧 发送邮件</a><a class="btn" href="https://github.com/vectorzhouu" target="_blank" rel="noreferrer">🌟 GitHub</a><a class="btn" href="#" onclick="copyLink(event)">🔗 复制本站链接</a></div></section>
+<footer>© <span id="year"></span> VectorZhouu · Build with ❤️ & curiosity</footer>
+</main>
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+const links=document.querySelectorAll('.menu a[href^="#"]');links.forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();document.querySelectorAll('.menu a').forEach(x=>x.classList.remove('active'));a.classList.add('active');document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth',block:'start'})})});
+const btn=document.getElementById('themeToggle');const THEME_KEY='pref-theme';const applyTheme=mode=>{document.documentElement.style.colorScheme=mode;document.body.dataset.theme=mode};const saved=localStorage.getItem(THEME_KEY);if(saved)applyTheme(saved);btn.addEventListener('click',()=>{const current=document.body.dataset.theme==='light'?'dark':'light';localStorage.setItem(THEME_KEY,current);applyTheme(current)});
+function copyLink(e){e.preventDefault();navigator.clipboard.writeText(location.href).then(()=>{const t=e.currentTarget;const old=t.textContent;t.textContent='✅ 已复制';setTimeout(()=>t.textContent=old,1200)})}
+</script>
 </body>
 </html>
