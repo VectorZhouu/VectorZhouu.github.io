@@ -227,22 +227,9 @@
     <section id="projects" class="section">
       <div class="section-head">
         <div class="title"><span class="dot"></span><h2>项目与作品</h2></div>
-        <span class="muted">示例卡片，可自行替换为真实项目</span>
+        <span class="muted">自动加载我的 GitHub 仓库</span>
       </div>
-      <div class="grid">
-        <article class="card">
-          <h3>🎛️ 同余计算器</h3>
-          <p>一个简洁的同余/模运算小工具，支持快速求余与简单同余方程求解。</p>
-        </article>
-        <article class="card">
-          <h3>📈 排序可视化</h3>
-          <p>用原生 JS 实现冒泡、快速等排序动画，帮助理解算法过程。</p>
-        </article>
-        <article class="card">
-          <h3>🧩 Manim 小动画</h3>
-          <p>用 Manim 绘制数学小动画，如数论小例题、几何直观演示。</p>
-        </article>
-      </div>
+      <div id="repoGrid" class="grid"></div>
     </section>
 
     <!-- 联系方式 -->
@@ -253,7 +240,7 @@
       </div>
       <div class="buttons">
         <a class="btn primary" href="mailto:yourname@example.com">📧 发送邮件</a>
-        <a class="btn" href="https://github.com/vectorzhouu" target="_blank" rel="noreferrer">🌟 GitHub</a>
+        <a class="btn" href="https://github.com/VectorZhouu" target="_blank" rel="noreferrer">🌟 GitHub</a>
         <a class="btn" href="#" onclick="copyLink(event)">🔗 复制本站链接</a>
       </div>
     </section>
@@ -290,22 +277,4 @@
         document.body.dataset.theme = 'dark';
       }
     };
-    const saved = localStorage.getItem(THEME_KEY);
-    if (saved) applyTheme(saved);
-    btn.addEventListener('click', () => {
-      const current = document.body.dataset.theme === 'light' ? 'dark' : 'light';
-      localStorage.setItem(THEME_KEY, current);
-      applyTheme(current);
-    });
-
-    // 复制链接
-    function copyLink(e){
-      e.preventDefault();
-      navigator.clipboard.writeText(location.href).then(()=>{
-        const t = e.currentTarget; const old = t.textContent; t.textContent = '✅ 已复制';
-        setTimeout(()=> t.textContent = old, 1200);
-      });
-    }
-  </script>
-</body>
-</html>
+    const saved
