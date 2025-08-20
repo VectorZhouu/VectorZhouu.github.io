@@ -4,46 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VectorZhouu — 个人主页</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
+    * {margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif;}
     body {
-      background: linear-gradient(135deg, #1f1c2c, #928dab);
-      color: #fff;
-      min-height: 100vh;
-      overflow-x: hidden;
+      background: #f5f7fa;
+      color: #333;
     }
     header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      backdrop-filter: blur(12px);
-      background: rgba(255, 255, 255, 0.08);
+      background: #4a90e2;
+      padding: 20px;
+      color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 40px;
-      z-index: 1000;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
     }
-    header h1 {
-      font-weight: 600;
-    }
+    header h1 {font-size: 24px;}
     nav a, .btn {
       margin-left: 20px;
-      color: white;
       text-decoration: none;
-      font-weight: 400;
+      color: white;
+      font-weight: bold;
       transition: 0.3s;
     }
-    nav a:hover {
-      color: #ffeb3b;
-    }
+    nav a:hover {color: #ffeb3b;}
     .btn {
       padding: 10px 20px;
       border-radius: 12px;
@@ -71,70 +54,38 @@
       from { transform: translate(0, 0); }
       to { transform: translate(-20%, -20%); }
     }
-    .btn:hover {
-      transform: scale(1.05);
-    }
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-    }
-    .hero h2 {
-      font-size: 3em;
-      margin-bottom: 20px;
-    }
-    .hero p {
-      font-size: 1.2em;
-      opacity: 0.9;
-    }
-    section {
-      padding: 100px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
+    .btn:hover {transform: scale(1.05);}
+    section {padding: 60px 20px; max-width: 1000px; margin:auto;}
+    section h2 {margin-bottom: 20px; color:#4a90e2;}
     .projects {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 20px;
     }
     .project-card {
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(12px);
-      padding: 25px;
-      border-radius: 15px;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255,255,255,0.2);
-      animation: fadeInUp 0.8s ease;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
     }
-    .project-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-    }
-    @keyframes fadeInUp {
-      from {opacity:0; transform: translateY(20px);} to {opacity:1; transform:translateY(0);}
+    .project-card:hover {transform: translateY(-5px);}
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #eee;
+      margin-top: 40px;
     }
     .loader {
-      border: 4px solid rgba(255,255,255,0.2);
-      border-top: 4px solid #fff;
+      border: 4px solid rgba(0,0,0,0.1);
+      border-top: 4px solid #4a90e2;
       border-radius: 50%;
       width: 40px;
       height: 40px;
       animation: spin 1s linear infinite;
       margin: 40px auto;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    footer {
-      text-align: center;
-      padding: 30px;
-      background: rgba(255,255,255,0.05);
-      border-top: 1px solid rgba(255,255,255,0.2);
-    }
+    @keyframes spin {to{transform:rotate(360deg);}}
   </style>
 </head>
 <body>
@@ -149,21 +100,16 @@
     </nav>
   </header>
 
-  <section class="hero">
-    <h2>你好，我是 VectorZhouu 👋</h2>
-    <p>一名热爱计算机与开发的高中生</p>
-  </section>
-
   <section id="about">
     <h2>关于我</h2>
-    <p>欢迎来到我的个人主页！我喜欢计算机科学、开发和 Python，目前正在不断学习和进步。</p>
+    <p>你好！我是 VectorZhouu，一名热爱计算机科学与开发的高中生。</p>
   </section>
 
   <section id="skills">
     <h2>技能</h2>
     <ul>
-      <li>Python 开发</li>
-      <li>前端基础 (HTML, CSS, JavaScript)</li>
+      <li>Python</li>
+      <li>前端开发 (HTML, CSS, JavaScript)</li>
       <li>算法与数据结构</li>
     </ul>
   </section>
@@ -176,7 +122,7 @@
 
   <section id="contact">
     <h2>联系我</h2>
-    <p>Email: <a href="mailto:yourmail@example.com" style="color:#ffeb3b">yourmail@example.com</a></p>
+    <p>Email: <a href="mailto:yourmail@example.com">yourmail@example.com</a></p>
   </section>
 
   <footer>
@@ -193,7 +139,7 @@
       repos.forEach(repo => {
         const card = document.createElement('div');
         card.className = 'project-card';
-        card.innerHTML = `<h3>${repo.name}</h3><p>${repo.description || '暂无描述'}</p><a href="${repo.html_url}" target="_blank" style="color:#ffeb3b">查看仓库</a>`;
+        card.innerHTML = `<h3>${repo.name}</h3><p>${repo.description || '暂无描述'}</p><a href="${repo.html_url}" target="_blank">查看仓库</a>`;
         list.appendChild(card);
       });
     }
